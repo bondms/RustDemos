@@ -28,26 +28,44 @@ impl List {
     self.head = Link::More(new_node);
   }
 
-  pub fn pop(&mut self) -> Option<i32> {
-    match mem::replace(&mut self.head, Link::Empty) {
-      Link::Empty => None,
-      Link::More(node) => {
-        self.head = node.next;
-        Some(node.elem)
-      }
+  fn pop_node(&mut self) -> Link {
+    match &mut self.head {
+      Link::Empty => Link::Empty,
+      Link::More(node) => mem::replace(&mut self.head, node.next),
     }
   }
+
+  pub fn pop(&mut self) -> Option<i32> {
+    match self.pop_node() {
+      Link::Empty => None,
+      Link::More(node) => Some(node.elem),
+    }
+  }
+
+  // pub fn pop(&mut self) -> Option<i32> {
+  //   match mem::replace(&mut self.head, Link::Empty) {
+  //     Link::Empty => None,
+  //     Link::More(node) => {
+  //       self.head = node.next;
+  //       Some(node.elem)
+  //     }
+  //   }
+  // }
 }
 
 // Custom `Drop` to avoid unbounded recursion.
 impl Drop for List {
   fn drop(&mut self) {
-    let mut cur_link = mem::replace(&mut self.head, Link::Empty);
-    while let Link::More(mut boxed_node) = cur_link {
-      cur_link = mem::replace(&mut boxed_node.next, Link::Empty);
-      // `boxed_node` implicitly dropped as it leaves scope.
-    }
+    while let Some(_) = self.pop() {}
   }
+
+  // fn drop(&mut self) {
+  //   let mut cur_link = mem::replace(&mut self.head, Link::Empty);
+  //   while let Link::More(mut boxed_node) = cur_link {
+  //     cur_link = mem::replace(&mut boxed_node.next, Link::Empty);
+  //     // `boxed_node` implicitly dropped as it leaves scope.
+  //   }
+  // }
 }
 
 #[cfg(test)]
