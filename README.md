@@ -6,7 +6,7 @@ A collection of simple Rust demo programs.
 
 ## Status
 
-![Super-Linter](https://github.com/bondms/cpp_demos/workflows/Super-Linter/badge.svg)
+![Super-Linter](https://github.com/bondms/RustDemos/workflows/Super-Linter/badge.svg)
 
 ## Projects
 
