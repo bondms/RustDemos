@@ -18,3 +18,8 @@ To build and run unit tests:
 ```bash
 cargo test
 ```
+
+To automatically format the source files:
+```bash
+rustfmt src/*.rs
+```
