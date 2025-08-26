@@ -206,6 +206,9 @@ mod test {
     assert_eq!(iter.next(), Some(&2));
     assert_eq!(iter.next(), Some(&1));
     assert_eq!(iter.next(), None);
+
+    // The iterated elements are still in the list.
+    assert_eq!(list.peek(), Some(&3));
   }
 
   #[test]
@@ -222,5 +225,8 @@ mod test {
     assert_eq!(iter.next(), Some(&mut 2));
     assert_eq!(iter.next(), Some(&mut 1));
     assert_eq!(iter.next(), None);
+
+    // The iterated elements are still in the list.
+    assert_eq!(list.peek(), Some(&3));
   }
 }
