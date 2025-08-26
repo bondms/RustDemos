@@ -101,5 +101,14 @@ mod test {
     // Populated list.
     assert_eq!(list.peek(), Some(&3));
     assert_eq!(list.peek_mut(), Some(&mut 3));
+
+    // Mutate via `peek_mut`.
+    list.peek_mut().map(|value| {
+      *value = 42
+    });
+
+    // Check mutation.
+    assert_eq!(list.peek(), Some(&42));
+    assert_eq!(list.pop(), Some(42));
   }
 }
