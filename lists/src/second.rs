@@ -56,11 +56,11 @@ impl<T> Drop for List<T> {
 
 // IntoIter
 
-pub struct IntoIter<T>(List<T>);
+pub type IntoIter<T> = List<T>;
 
 impl<T> List<T> {
   pub fn into_iter(self) -> IntoIter<T> {
-    IntoIter(self)
+    self
   }
 }
 
@@ -68,19 +68,17 @@ impl<T> Iterator for IntoIter<T> {
   type Item = T;
 
   fn next(&mut self) -> Option<Self::Item> {
-    self.0.pop()
+    self.pop()
   }
 }
 
 // Iter
 
-pub struct Iter<'a, T> {
-  next: Option<&'a Node<T>>,
-}
+pub struct Iter<'a, T>(Option<&'a Node<T>>);
 
 impl<T> List<T> {
   pub fn iter(&self) -> Iter<T> {
-    Iter { next: self.head.as_deref() }
+    Iter(self.head.as_deref())
   }
 }
 
@@ -88,8 +86,8 @@ impl<'a, T> Iterator for Iter<'a, T> {
   type Item = &'a T;
 
   fn next(&mut self) -> Option<Self::Item> {
-    self.next.map(|node| {
-      self.next = node.next.as_deref();
+    self.0.map(|node| {
+      self.0 = node.next.as_deref();
       &node.elem
     })
   }
