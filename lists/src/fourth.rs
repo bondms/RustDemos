@@ -37,8 +37,8 @@ impl<T> List<T> {
         match self.head.take() {
             Some(old_head) => {
                 // Pushing to front of non-empty list.
-                old_head.prev = Some(new_head.clone());
-                new_head.next = Some(old_head);
+                old_head.borrow_mut().prev = Some(new_head.clone());
+                new_head.borrow_mut().next = Some(old_head);
                 self.head = Some(new_head);
             }
             None => {
