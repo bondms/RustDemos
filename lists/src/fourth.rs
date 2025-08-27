@@ -66,3 +66,38 @@ impl<T> List<T> {
         })
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::List;
+
+    #[test]
+    fn basics() {
+        let mut list = List::new();
+
+        // Empty list.
+        assert_eq!(list.pop_front(), None);
+
+        // Populate.
+        list.push_front(1);
+        list.push_front(2);
+        list.push_front(3);
+
+        // Removal.
+        assert_eq!(list.pop_front(), Some(3));
+        assert_eq!(list.pop_front(), Some(2));
+
+        // Rebuild.
+        list.push_front(4);
+        list.push_front(5);
+
+        // Removal.
+        assert_eq!(list.pop_front(), Some(5));
+        assert_eq!(list.pop_front(), Some(4));
+        assert_eq!(list.pop_front(), Some(1));
+
+        // Exhaustion.
+        assert_eq!(list.pop_front(), None);
+
+    }
+}
