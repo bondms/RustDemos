@@ -15,11 +15,11 @@ struct Node<T> {
 }
 
 impl<T> Node<T> {
-    pub fn new(elem: T) -> Rc<RefCell<Self>> {
+    fn new(elem: T) -> Rc<RefCell<Self>> {
         Rc::new(RefCell::new(Node {
             elem: elem,
-            next: None,
             prev: None,
+            next: None,
         }))
     }
 }
